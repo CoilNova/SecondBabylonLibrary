@@ -6,6 +6,9 @@ def index(request):
 def books_searching(request):
     return render(request, 'books_searching.html')
 
+def borrowed_books(request):
+    return render(request, 'borrowed_books.html')
+
 def login(request):
     return render(request, 'login.html')
 

@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('books_searching', views.books_searching),
+    path('borrowed_books', views.borrowed_books),
     path('login', views.login),
     path('registration', views.registration),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
