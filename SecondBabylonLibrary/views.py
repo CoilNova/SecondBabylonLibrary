@@ -9,6 +9,9 @@ def books_searching(request):
 def borrowed_books(request):
     return render(request, 'borrowed_books.html')
 
+def reading_book(request):
+    return render(request, 'reading_book.html')
+
 def login(request):
     return render(request, 'login.html')
 
