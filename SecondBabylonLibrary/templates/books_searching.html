@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="static/semantic/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="static/semantic/semantic.min.js"></script>
+    <!-- Standard Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+
+        body>.grid {
+            height: 100%;
+        }
+
+        .image {
+            margin-top: -100px;
+        }
+
+        .column {
+            max-width: 450px;
+        }
+    </style>
+    <style>
+        body {
+            background-image: url("static/background.png");
+            /* Путь к фоновому изображению */
+            background-color: #c7b39b;
+            /* Цвет фона */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui raised segments centered">
+        <div class="ui segment" style="width: 100%; height: 6%;">
+            <div class="ui secondary menu">
+                <a class="active item">
+                    Поиск книг
+                </a>
+                <a class="item">
+                    Взятые на чтение книги
+                </a>
+                <div class="right menu">
+                    <a class="item">
+                        <i class="id card outline icon"></i> <b>Александр Чортович</b>
+                    </a>
+                    <div class="ui vertical animated button" tabindex="0">
+                        <div class="hidden content">Пока!</div>
+                        <div class="visible content">
+                            <i class="sign out icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui segment" style="width: 100%; height: 94%;">
+            <table class="ui single line table">
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            <div class="ui search">
+                                <div class="ui icon input">
+                                    <input class="prompt" type="text" placeholder="Поиск книг...">
+                                    <i class="search icon"></i>
+                                </div>
+                                <div class="results"></div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="book icon"></i> Дональд Трамп. Искусство сделки
+                        </td>
+                        <td class="right aligned collapsing">
+                            <button class="ui button" style="width: 50%;">
+                                Читать (Осталось 10 экземпляров)
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="book icon"></i> Django. Разработка веб-приложений на Python
+                        </td>
+                        <td class="right aligned collapsing">
+                            <button class="ui button" style="width: 50%;">
+                                Читать (Остался 1 экземпляр)
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="collapsing">
+                            <i class="book icon"></i> Книга "Пёся" (Водвуд Ника)
+                        </td>
+                        <td class="right aligned collapsing">
+                            <button class="ui button disabled" style="width: 50%;">
+                                Осталось 0 экземпляров
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
