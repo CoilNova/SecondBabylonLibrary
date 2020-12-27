@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^login/$', views.LoginFormView.as_view(), name='login'),
     url(r'^signup/$', views.RegisterFormView.as_view(), name='signup'),
     url(r'^logout/$', views.LogoutView.as_view()),
-    url('main/', views.index)
+    url('main/', include('Books.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()
