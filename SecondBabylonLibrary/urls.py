@@ -19,15 +19,17 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls import include, url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
     path('books_searching', views.books_searching),
     path('borrowed_books', views.borrowed_books),
     path('reading_book', views.reading_book),
-    path('login', views.login),
-    path('registration', views.registration),
+    url(r'^login/$', views.LoginFormView.as_view(), name='login'),
+    url(r'^signup/$', views.RegisterFormView.as_view(), name='signup'),
+    url(r'^logout/$', views.LogoutView.as_view()),
+    url('main/', views.index)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

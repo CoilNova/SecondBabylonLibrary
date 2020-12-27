@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'semantic/semantic.min.css' %}">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="{% static 'semantic/semantic.min.js' %}"></script>
+    <!-- Standard Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <style type="text/css">
+        body {
+            background-color: #2F0A0A;
+            background-image: url("{% static 'background.png' %}");
+        }
+
+        body>.grid {
+            height: 100%;
+        }
+
+        .image {
+            margin-top: -100px;
+        }
+
+        .column {
+            max-width: 450px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui teal image header">
+                <img src="{% static 'icons8-open-door-80.png' %}" class="image">
+                <div class="content" style="color: white;">
+                    Регистрация для членства во Второй Вавилонской Библиотеке
+                </div>
+            </h2>
+
+            <div class="ui stacked attached segment" style="padding-bottom: 0em;">
+                <div class="ui form">
+                    {% load semanticui %}
+
+                    <form method="post">
+    {% csrf_token %}
+    {% render_form form %}
+    <button class="ui red fluid large submit button" type="submit">Зарегистрироваться</button>
+  </form>
+                </div>
+            </div>
+
+            <div class="ui message">
+                Вам не впервой быть здесь? <a href="/login">Войдите</a> с поклоном и уважением
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
