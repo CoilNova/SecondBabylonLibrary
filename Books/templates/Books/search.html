@@ -10,7 +10,7 @@
                 </a>
                 <div class="right menu">
                     <a class="item">
-                        <i class="id card outline icon"></i> <b>Александр Чортович</b>
+                        <i class="id card outline icon"></i> <b>{{ user.username }}</b>
                     </a>
                     <div class="ui vertical animated button" tabindex="0">
                         <div class="hidden content">Пока!</div>
@@ -23,7 +23,7 @@
 {% block table_content %}
 {% for book in books %}
 {% for read in reading %}
-{% if read.book_id == book.id %}
+{% if read.book_id != book.id %}
                     <tr>
                         <td class="collapsing">
                             <i class="book icon"></i> {{ book.title }} {{ book.author }}
