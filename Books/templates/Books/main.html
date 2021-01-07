@@ -23,12 +23,13 @@
     </script>
 </div>
 {% endblock %}
+
 {% block table_content %}
 {% for read in reading %}
 
 <tr>
-    <td class="collapsing">
-        <i class="book icon"></i>{{ read.book_id.title }}
+    <td class="special collapsing">
+        <div class = "bookTitle" data-html="<div class='header'></div><div class='content'><img class='ui small image' src='{{ read.book_id.cover.url }}'>" data-position="bottom right" ><i class="book icon"></i>{{ read.book_id.title }}</div>
     </td>
     <td class="collapsing">
         {{ read.book_id.author }}
@@ -43,6 +44,14 @@
     </td>
 </tr>
 
-
 {% endfor %}
+
+<script>
+    $('.bookTitle')
+        .popup({
+            on: 'hover'
+        })
+        ;
+</script>
+
 {% endblock %}
