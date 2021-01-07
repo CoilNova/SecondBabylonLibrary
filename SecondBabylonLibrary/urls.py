@@ -28,7 +28,7 @@ urlpatterns = [
     path('reading_book', views.reading_book),
     url(r'^login/$', views.LoginFormView.as_view(), name='login'),
     url(r'^signup/$', views.RegisterFormView.as_view(), name='signup'),
-    url(r'^logout/$', views.LogoutView.as_view()),
+    url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
     url('main/', include('Books.urls')),
     url('search/', include('Books.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

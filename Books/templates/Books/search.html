@@ -21,9 +21,9 @@
                 </div>
 {% endblock %}
 {% block table_content %}
+
 {% for book in books %}
-{% for read in reading %}
-{% if read.book_id != book.id %}
+
                     <tr>
                         <td class="collapsing">
                             <i class="book icon"></i> {{ book.title }} {{ book.author }}
@@ -32,21 +32,13 @@
                             <button class="ui button" style="width: 50%;">
                                 Читать (Осталось {{ book.count }} экземпляров)
                             </button>
+                            <form action="{% url 'Books:addreading' book.id %}" method=POST>{% csrf_token %}
+                            <button id="approve-btn" type="submit">Approve</button>
+                            </form>
                         </td>
                     </tr>
-{% endif %}
+
+
 {% endfor %}
-{% if book.count == 0 %}
-                    <tr>
-                        <td class="collapsing">
-                            <i class="book icon"></i> {{ book.title }} {{ book.author }}
-                        </td>
-                        <td class="right aligned collapsing">
-                            <button class="ui button disabled" style="width: 50%;">
-                                Осталось {{ book.count }} экземпляров
-                            </button>
-                        </td>
-                    </tr>
-{% endif %}
-{% endfor %}
+
 {% endblock %}

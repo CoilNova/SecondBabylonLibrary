@@ -10,27 +10,30 @@
                 </a>
                 <div class="right menu">
                     <a class="item">
-                        <i class="id card outline icon"></i> <b>{{ user.id }}</b>
+                        <i class="id card outline icon"></i> <b>{{ user.username }}</b>
                     </a>
-                    <div class="ui vertical animated button" tabindex="0">
+                    <div class="ui vertical animated button" id="logoutButton" tabindex="0">
                         <div class="hidden content">Пока!</div>
                         <div class="visible content">
                             <i class="sign out icon"></i>
                         </div>
                     </div>
+                    <script>
+                document.getElementById("logoutButton").addEventListener("click", function(){ window.location.replace("{% url 'logout' %}");; });
+                </script>
                 </div>
 {% endblock %}
 {% block table_content %}
 
-                {% for book in books %}
+
                     {% for read in reading %}
-                        {% if user.id == read.user_id and book.id == read.book_id %}
+
                     <tr>
                         <td class="collapsing">
-                            <i class="book icon"></i>{{ book.title}}
+                            <i class="book icon"></i>{{ read.book_id.title }}
                         </td>
                         <td class="collapsing">
-                            {{ book.author }}
+                            {{ read.book_id.author }}
                         </td>
                         <td class="right aligned collapsing">
                             <button class="ui green button" style="width: 30%;">
@@ -41,7 +44,7 @@
                             </button>
                         </td>
                     </tr>
-                        {% endif %}
-                    {% endfor %}
+
+
                 {% endfor %}
  {% endblock %}
