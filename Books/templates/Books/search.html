@@ -26,7 +26,9 @@
 
                     <tr>
                         <td class="collapsing">
-                            <i class="book icon"></i> {{ book.title }} {{ book.author }}
+
+                            <div class = "bookTitle" data-html="<div class='header'></div><div class='content'><img class='ui small image' src='{{ book.cover.url }}'>" data-position="bottom right" ><i class="book icon"></i>{{ book.title }}</div>
+                            <i>{{ book.author }}</i>
                         </td>
                         <td class="right aligned collapsing">
 
@@ -47,5 +49,13 @@
 
 
 {% endfor %}
+
+<script>
+    $('.bookTitle')
+        .popup({
+            on: 'hover'
+        })
+        ;
+</script>
 
 {% endblock %}
