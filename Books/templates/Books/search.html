@@ -29,11 +29,18 @@
                             <i class="book icon"></i> {{ book.title }} {{ book.author }}
                         </td>
                         <td class="right aligned collapsing">
-                            <button class="ui button" style="width: 50%;">
-                                Читать (Осталось {{ book.count }} экземпляров)
-                            </button>
-                            <form action="{% url 'Books:addreading' book.id %}" method=POST>{% csrf_token %}
-                            <button id="approve-btn" type="submit">Approve</button>
+
+                            <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <input type="hidden" name="book_id" value="{{ book.id }} " />
+        </p>
+        <p>
+        <button type="submit" value="Сохранить" class="ui button" style="width: 50%;">
+            Читать (Осталось {{ book.count }} экземпляров)
+                </button>
+    </form>
+
                             </form>
                         </td>
                     </tr>
