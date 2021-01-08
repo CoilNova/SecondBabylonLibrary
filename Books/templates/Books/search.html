@@ -24,6 +24,30 @@
 
 {% for book in books %}
 
+{% if book in array %}
+    <tr>
+                        <td class="collapsing">
+
+                            <div class = "bookTitle" data-html="<div class='header'></div><div class='content'><img class='ui small image' src='{{ book.cover.url }}'>" data-position="bottom right" ><i class="book icon"></i>{{ book.title }}</div>
+                            <i>{{ book.author }}</i>
+                        </td>
+                        <td class="right aligned collapsing">
+
+                            <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <input type="hidden" name="book_id" value="{{ book.id }} " />
+        </p>
+        <p>
+        <button type="submit" value="Сохранить" class="ui button disabled" style="width: 50%;">
+            Вы уже читаете
+                </button>
+    </form>
+
+                            </form>
+                        </td>
+                    </tr>
+{% elif book.count > 0 %}
                     <tr>
                         <td class="collapsing">
 
@@ -47,6 +71,30 @@
                         </td>
                     </tr>
 
+{% else %}
+    <tr>
+                        <td class="collapsing">
+
+                            <div class = "bookTitle" data-html="<div class='header'></div><div class='content'><img class='ui small image' src='{{ book.cover.url }}'>" data-position="bottom right" ><i class="book icon"></i>{{ book.title }}</div>
+                            <i>{{ book.author }}</i>
+                        </td>
+                        <td class="right aligned collapsing">
+
+                            <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <input type="hidden" name="book_id" value="{{ book.id }} " />
+        </p>
+        <p>
+        <button type="submit" value="Сохранить" class="ui button disabled" style="width: 50%;">
+            Нет в наличии
+                </button>
+    </form>
+
+                            </form>
+                        </td>
+                    </tr>
+    {% endif %}
 
 {% endfor %}
 

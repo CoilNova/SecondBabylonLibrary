@@ -11,8 +11,11 @@ def Searching(request):
     current_user = request.user
     books = Book.objects.all()
     reading = ReadingList.objects.all().filter(user_id=current_user)
+    array = []
+    for r in reading:
+        array.append(r.book_id)
     complete = CompleteList.objects.all().filter(user_id=current_user)
-    return render(request, 'Books/search.html', {'reading': reading, 'complete': complete, 'books':books})
+    return render(request, 'Books/search.html', {'array': array, 'complete': complete, 'books':books})
 
 def AddReading(request, rbookid):
     reading = ReadingList()
