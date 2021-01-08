@@ -7,8 +7,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic.base import View
 from django.contrib.auth import logout
 from urllib import request
-
-
+import Books.models
 class RegisterFormView(FormView):
     form_class = UserCreationForm
 
@@ -68,3 +67,8 @@ def reading_book(request):
 
 def registration(request):
     return render(request, 'registration.html')
+
+def read(request, rbookid):
+    book = Books.models.Book.objects.get(pk=rbookid)
+    book.save
+    return render(request, 'read.html', {'book': book})

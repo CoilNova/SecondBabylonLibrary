@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 class Book(models.Model):
     title = models.CharField(max_length=50, help_text="Название книги")
     author = models.CharField(max_length=50, help_text="Автор книги")
-    cover = models.ImageField(upload_to='covers')
+    cover = models.ImageField(upload_to="covers")
+    pdf = models.FileField(upload_to="pdf")
     count = models.IntegerField()
 
 

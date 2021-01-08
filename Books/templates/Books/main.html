@@ -33,7 +33,7 @@
         <i>{{ read.book_id.author }}</i>
     </td>
     <td class="right aligned collapsing">
-        <button class="ui green button">
+        <button class="ui green button reading">
             Читать (Осталось {{ read.days }} дней)
         </button>
         <button class="ui red button">
@@ -41,6 +41,14 @@
         </button>
     </td>
 </tr>
+
+<script>
+    $('.reading').click(
+        function () {
+            window.location.replace("{% url 'read' read.book_id.id %}");
+        }
+    )
+</script>
 
 {% endfor %}
 
@@ -50,6 +58,7 @@
             on: 'hover'
         })
         ;
+    
 </script>
 
 {% endblock %}

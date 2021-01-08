@@ -1,0 +1,157 @@
+{% extends 'Books/base.html' %}
+
+{% block title %}Чтение книжоночки{% endblock %}
+{% block panel %}
+<a class="item" href="/main/">
+    Прекратить чтение книжочки
+</a>
+<div class="right menu">
+    <a class="item">
+        <i class="id card outline icon"></i> <b>{{ user.username }}</b>
+    </a>
+    <div class="ui vertical animated button" id="logoutButton" tabindex="0">
+        <div class="hidden content">Пока!</div>
+        <div class="visible content">
+            <i class="sign out icon"></i>
+        </div>
+    </div>
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function () { window.location.replace("{% url 'logout' %}");; });
+    </script>
+</div>
+
+
+{% endblock %}
+
+{% block table_content %}
+
+<script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+
+
+<div style="display: flex; justify-content: center;">
+
+    <div class="ui buttons">
+    <button class="ui labeled icon button" id="prev">
+        <i class="left arrow icon"></i>
+        Предыдущая
+    </button>
+
+    <button class="ui button disabled">
+            <span>Страница: <span id="page_num"></span> / <span id="page_count"></span></span>
+     </button>
+
+    <button class="ui right labeled icon button" id="next">
+        <i class="right arrow icon"></i>
+        Следущая
+    </button>
+</div>
+</div>
+
+<div style="display: flex; justify-content: center; margin-top: 1pc;">
+
+    <canvas id="the-canvas"></canvas>
+</div>
+<script type="text/javascript">
+    // If absolute URL from the remote server is provided, configure the CORS
+    // header on that server.
+    var url = '{{ book.pdf.url }}';
+
+    // Loaded via <script> tag, create shortcut to access PDF.js exports.
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+    // The workerSrc property shall be specified.
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+    var pdfDoc = null,
+        pageNum = 1,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1,
+        canvas = document.getElementById('the-canvas'),
+        ctx = canvas.getContext('2d');
+
+    /**
+     * Get page info from document, resize canvas accordingly, and render page.
+     * @param num Page number.
+     */
+    function renderPage(num) {
+        pageRendering = true;
+        // Using promise to fetch the page
+        pdfDoc.getPage(num).then(function (page) {
+            var viewport = page.getViewport({ scale: scale });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            var renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+            var renderTask = page.render(renderContext);
+
+            // Wait for rendering to finish
+            renderTask.promise.then(function () {
+                pageRendering = false;
+                if (pageNumPending !== null) {
+                    // New page rendering is pending
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
+            });
+        });
+
+        // Update page counters
+        document.getElementById('page_num').textContent = num;
+    }
+
+    /**
+     * If another page rendering in progress, waits until the rendering is
+     * finised. Otherwise, executes rendering immediately.
+     */
+    function queueRenderPage(num) {
+        if (pageRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
+        }
+    }
+
+    /**
+     * Displays previous page.
+     */
+    function onPrevPage() {
+        if (pageNum <= 1) {
+            return;
+        }
+        pageNum--;
+        queueRenderPage(pageNum);
+    }
+    document.getElementById('prev').addEventListener('click', onPrevPage);
+
+    /**
+     * Displays next page.
+     */
+    function onNextPage() {
+        if (pageNum >= pdfDoc.numPages) {
+            return;
+        }
+        pageNum++;
+        queueRenderPage(pageNum);
+    }
+    document.getElementById('next').addEventListener('click', onNextPage);
+
+    /**
+     * Asynchronously downloads PDF.
+     */
+    pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+        // Initial/first page rendering
+        renderPage(pageNum);
+    });
+
+</script>
+
+{% endblock %}
