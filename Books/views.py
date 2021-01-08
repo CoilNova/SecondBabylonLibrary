@@ -33,3 +33,14 @@ def create(request):
         newbook.save()
         book.save()
     return HttpResponseRedirect("/main/")
+
+def delete(request, id):
+    try:
+        reading = ReadingList.objects.get(id=id)
+        book = Book.objects.get(id=reading.book_id.id)
+        book.count = book.count+1
+        book.save()
+        reading.delete()
+        return HttpResponseRedirect("/search")
+    except Person.DoesNotExist:
+        return HttpResponseNotFound("<h2>Book not found</h2>")

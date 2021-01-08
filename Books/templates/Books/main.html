@@ -36,7 +36,7 @@
         <button class="ui green button reading">
             Читать (Осталось {{ read.days }} дней)
         </button>
-        <button class="ui red button">
+        <button class="ui red button delete">
             Вернуть
         </button>
     </td>
@@ -46,6 +46,11 @@
     $('.reading').click(
         function () {
             window.location.replace("{% url 'read' read.book_id.id %}");
+        }
+    )
+    $('.delete').click(
+        function () {
+            window.location.replace("delete/{{ read.id }}");
         }
     )
 </script>
