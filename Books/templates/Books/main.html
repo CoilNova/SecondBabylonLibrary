@@ -25,6 +25,7 @@
 {% endblock %}
 
 {% block table_content %}
+    {% if reading %}
 {% for read in reading %}
 
 <tr>
@@ -65,5 +66,7 @@
         ;
     
 </script>
-
+        {% else %}
+        Вы не читаете ни одной книги, <a href="/main/search/">перейти в каталог</a>
+{% endif %}
 {% endblock %}

@@ -6,10 +6,9 @@ def Reading(request):
     if request.user.is_authenticated:
         current_user = request.user
         reading = ReadingList.objects.all().filter(user_id=current_user)
-        if reading:
-            return render(request, 'Books/main.html', {'reading': reading})
-        else:
-            return HttpResponseRedirect("/main/search")
+
+        return render(request, 'Books/main.html', {'reading': reading})
+
     else:
         return HttpResponseRedirect("/login")
 
