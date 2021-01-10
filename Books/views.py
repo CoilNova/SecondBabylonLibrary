@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import Book, ReadingList, CompleteList
 from django.http import HttpResponseRedirect
+from django.db.models import Q
+from django.views.generic import DetailView
+from django.views.generic import ListView
 
 def Reading(request):
     if request.user.is_authenticated:
@@ -14,8 +17,14 @@ def Reading(request):
 
 def Searching(request):
     if request.user.is_authenticated:
+        context={}
+        query=""
+        if request.GET:
+            query=request.GET['q']
+            context['query']=str(query)
+
         current_user = request.user
-        books = Book.objects.all()
+        books = get_books_queryset(query)
         reading = ReadingList.objects.all().filter(user_id=current_user)
         array = []
         for r in reading:
@@ -51,3 +60,17 @@ def delete(request, id):
             return HttpResponseRedirect("/search")
         except Person.DoesNotExist:
             return HttpResponseNotFound("<h2>Book not found</h2>")
+
+def get_books_queryset(query=None):
+    queryset=[]
+    queries=query.split(" ")
+    for q in queries:
+        books=Book.objects.filter(
+            Q(title__icontains=q) |
+            Q(author__icontains=q)
+        ).distinct()
+
+        for book in books:
+            queryset.append(book)
+
+    return list(set(queryset))
