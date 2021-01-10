@@ -1,6 +1,6 @@
 {% extends 'Books/base.html' %}
 
-{% block title %}Чтение книжоночки{% endblock %}
+{% block title %} {{ book.title }} - {{ book.author }} {% endblock %}
 {% block panel %}
 <a class="item" href="/main/">
     Прекратить чтение книжочки
@@ -32,20 +32,21 @@
 <div style="display: flex; justify-content: center;">
 
     <div class="ui buttons">
-    <button class="ui labeled icon button" id="prev">
-        <i class="left arrow icon"></i>
-        Предыдущая
-    </button>
+        <button class="ui labeled icon button" id="prev">
+            <i class="left arrow icon"></i>
+            Предыдущая
+        </button>
 
-    <button class="ui button disabled">
+        <button class="ui button disabled">
             <span>Страница: <span id="page_num"></span> / <span id="page_count"></span></span>
-     </button>
+        </button>
 
-    <button class="ui right labeled icon button" id="next">
-        <i class="right arrow icon"></i>
-        Следущая
-    </button>
-</div>
+        <button class="ui right labeled icon button" id="next">
+            <i class="right arrow icon"></i>
+            Следущая
+        </button>
+    </div>
+    <div style="display: none;" id="reading_id">{{ reading_id }}</div>
 </div>
 
 <div style="display: flex; justify-content: center; margin-top: 1pc;">
@@ -64,7 +65,7 @@
     pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
     var pdfDoc = null,
-        pageNum = 1,
+        pageNum = parseInt('{{last_page}}'),
         pageRendering = false,
         pageNumPending = null,
         scale = 1,
@@ -151,6 +152,27 @@
         // Initial/first page rendering
         renderPage(pageNum);
     });
+
+    function myFunction() {
+        $.ajax({
+            url: '{% url "ajax" %}',
+            type: 'post',
+            data: {
+                'reading_id': document.getElementById('reading_id').textContent,
+                'new_last_page': document.getElementById('page_num').textContent,
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log("ласт страница сохранена")
+            },
+            failure: function (data) {
+            }
+        });
+    }
+
+    setInterval(function () {
+        myFunction()
+    }, 5000)
 
 </script>
 

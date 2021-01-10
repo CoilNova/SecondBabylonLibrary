@@ -35,6 +35,7 @@ def create(request):
             book.count = book.count - 1
             newbook.book_id = book
             newbook.days = 15
+            newbook.last_page = 1
             newbook.save()
             book.save()
         return HttpResponseRedirect("/main/")

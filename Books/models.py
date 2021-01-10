@@ -13,6 +13,7 @@ class ReadingList(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
     days = models.IntegerField()
+    last_page = models.IntegerField()
 
 
 class CompleteList(models.Model):

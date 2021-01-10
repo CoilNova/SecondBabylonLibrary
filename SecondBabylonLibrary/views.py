@@ -7,7 +7,10 @@ from django.http import HttpResponseRedirect
 from django.views.generic.base import View
 from django.contrib.auth import logout
 from urllib import request
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 import Books.models
+
 class RegisterFormView(FormView):
     form_class = UserCreationForm
 
@@ -68,7 +71,21 @@ def reading_book(request):
 def registration(request):
     return render(request, 'registration.html')
 
-def read(request, rbookid):
-    book = Books.models.Book.objects.get(pk=rbookid)
-    book.save
-    return render(request, 'read.html', {'book': book})
+def read(request, reading_id):
+    reading = Books.models.ReadingList.objects.get(pk=reading_id)
+    book = Books.models.Book.objects.get(pk=reading.book_id.id)
+    return render(request, 'read.html', {'book': book, 'last_page': reading.last_page, 'reading_id': reading.id})
+
+@csrf_exempt
+def ajax(request):
+    message = ""
+    if request.is_ajax():
+        if request.method == 'POST':
+            reading_id = int(request.POST.get('reading_id', None))
+            print(reading_id)
+            new_last_page = int(request.POST.get('new_last_page', None))
+            print(new_last_page)
+            reading = Books.models.ReadingList.objects.get(pk=reading_id)
+            reading.last_page = new_last_page
+            reading.save()
+    return HttpResponse(message)

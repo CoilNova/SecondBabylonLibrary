@@ -31,7 +31,8 @@ urlpatterns = [
     url(r'^logout/$', views.LogoutView.as_view(), name='logout'),
     url('main/', include('Books.urls')),
     url('search/', include('Books.urls')),
-    path('read/<int:rbookid>', views.read, name = "read"),
+    url('ajax/', views.ajax, name='ajax'),
+    path('read/<int:reading_id>/', views.read, name = "read"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

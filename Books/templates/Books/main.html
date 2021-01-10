@@ -25,33 +25,35 @@
 {% endblock %}
 
 {% block table_content %}
-    {% if reading %}
+{% if reading %}
 {% for read in reading %}
 
 <tr>
     <td class="special collapsing">
-        <div class = "bookTitle" data-html="<div class='header'></div><div class='content'><img class='ui small image' src='{{ read.book_id.cover.url }}'>" data-position="bottom right" ><i class="book icon"></i>{{ read.book_id.title }}</div>
+        <div class="bookTitle"
+            data-html="<div class='header'></div><div class='content'><img class='ui small image' src='{{ read.book_id.cover.url }}'>"
+            data-position="bottom right"><i class="book icon"></i>{{ read.book_id.title }}</div>
         <i>{{ read.book_id.author }}</i>
     </td>
     <td class="right aligned collapsing">
-        <button class="ui green button reading">
-            Читать (Осталось {{ read.days }} дней)
-        </button>
-        <button class="ui red button delete">
+        <div class="ui right pointing label">Страница {{read.last_page}}</div>
+        <div class="ui green button reading {{ read.id }}">Читать (Осталось {{ read.days }} дней)</div>
+
+        <button class="ui red button delete {{ read.id }}">
             Вернуть
         </button>
     </td>
 </tr>
 
 <script>
-    $('.reading').click(
+    $('.reading.{{ read.id }}').click(
         function () {
-            window.location.replace("{% url 'read' read.book_id.id %}");
+            window.location.href = "{% url 'read' read.id %}"
         }
     )
-    $('.delete').click(
+    $('.delete.{{ read.id }}').click(
         function () {
-            window.location.replace("delete/{{ read.id }}");
+            window.location.href = "delete/{{ read.id }}"
         }
     )
 </script>
@@ -64,9 +66,9 @@
             on: 'hover'
         })
         ;
-    
+
 </script>
-        {% else %}
-        Вы не читаете ни одной книги, <a href="/main/search/">перейти в каталог</a>
+{% else %}
+Вы не читаете ни одной книги, <a href="/main/search/">перейти в каталог</a>
 {% endif %}
 {% endblock %}
