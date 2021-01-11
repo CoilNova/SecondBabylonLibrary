@@ -47,6 +47,7 @@
         </button>
     </div>
     <div style="display: none;" id="reading_id">{{ reading_id }}</div>
+    <div style="display: none;" id="book_id">{{ book.id }}</div>
 </div>
 
 <div style="display: flex; justify-content: center; margin-top: 1pc;">
@@ -130,10 +131,32 @@
     }
     document.getElementById('prev').addEventListener('click', onPrevPage);
 
+
+    function bookFinished() {
+        $.ajax({
+            url: '{% url "ajax2" %}',
+            type: 'post',
+            data: {
+                'book_id': document.getElementById('book_id').textContent,
+            },
+            dataType: 'json',
+            success: function (data) {
+            },
+            failure: function (data) {
+            }
+        });
+    }
+
+    let book_finished = false
+
     /**
      * Displays next page.
      */
     function onNextPage() {
+        if (book_finished == false && pageNum > pdfDoc.numPages - 2) {
+            book_finished = true
+            bookFinished()
+        }
         if (pageNum >= pdfDoc.numPages) {
             return;
         }
@@ -163,7 +186,6 @@
             },
             dataType: 'json',
             success: function (data) {
-                console.log("ласт страница сохранена")
             },
             failure: function (data) {
             }

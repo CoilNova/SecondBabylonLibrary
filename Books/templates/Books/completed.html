@@ -1,0 +1,54 @@
+{% extends 'Books/base.html' %}
+
+{% block title %}Список доступных книг{% endblock %}
+{% block panel %}
+<a class="item" href="/main/searching">
+    Поиск книг
+</a>
+<a class="item" href="/main">
+    Взятые на чтение книги
+</a>
+<a class="active item">
+    Список прочитанных книг
+</a>
+<div class="right menu">
+    <a class="item">
+        <i class="id card outline icon"></i> <b>{{ user.username }}</b>
+    </a>
+    <div class="ui vertical animated button" tabindex="0">
+        <div class="hidden content">Пока!</div>
+        <div class="visible content">
+            <i class="sign out icon"></i>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block table_content %}
+{% if completed_books%}
+{% for book in completed_books %}
+
+<tr>
+    <td class="special collapsing">
+        <div class="bookTitle"
+            data-html="<div class='header'></div><div class='content'><img class='ui small image' src='{{ book.book_id.cover.url }}'>"
+            data-position="bottom right"><i class="book icon"></i>{{ book.book_id.title }}</div>
+        <i>{{ book.book_id.author }}</i>
+    </td>
+</tr>
+
+{% endfor %}
+
+<script>
+    $('.bookTitle')
+        .popup({
+            on: 'hover'
+        })
+        ;
+
+</script>
+{% else %}
+Я скорее стану читать ка    кое-нибудь расписание или каталог, чем не читать вообще ничего.
+Сомерсет Моэм
+{% endif %}
+{% endblock %}

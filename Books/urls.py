@@ -12,5 +12,6 @@ urlpatterns = [
     path('', views.Reading, name='main'),
     path('search/', views.Searching, name='search'),
     path('create/', views.create),
+    path('completed/', views.completed),
     path('delete/<int:id>', views.delete, name='delete'),
 ]

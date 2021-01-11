@@ -74,3 +74,8 @@ def get_books_queryset(query=None):
             queryset.append(book)
 
     return list(set(queryset))
+
+def completed(request):
+    current_user = request.user
+    completed_books = CompleteList.objects.all().filter(user_id=current_user)
+    return render(request, "Books/completed.html", {'completed_books': completed_books})

@@ -82,10 +82,26 @@ def ajax(request):
     if request.is_ajax():
         if request.method == 'POST':
             reading_id = int(request.POST.get('reading_id', None))
-            print(reading_id)
             new_last_page = int(request.POST.get('new_last_page', None))
-            print(new_last_page)
             reading = Books.models.ReadingList.objects.get(pk=reading_id)
             reading.last_page = new_last_page
             reading.save()
+    return HttpResponse(message)
+
+@csrf_exempt
+def ajax2(request):
+    message = ""
+    if request.is_ajax():
+        if request.method == 'POST':
+            book_id = int(request.POST.get('book_id', None))
+            book = Books.models.Book.objects.get(pk=book_id)
+
+            completed_book = Books.models.CompleteList.objects.all().filter(user_id=request.user, book_id=book)
+            if not completed_book:
+                new_completed_book = Books.models.CompleteList()
+                new_completed_book.book_id = book
+                new_completed_book.user_id = request.user
+
+                new_completed_book.save()
+            
     return HttpResponse(message)

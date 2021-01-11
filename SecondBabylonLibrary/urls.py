@@ -32,6 +32,7 @@ urlpatterns = [
     url('main/', include('Books.urls')),
     url('search/', include('Books.urls')),
     url('ajax/', views.ajax, name='ajax'),
+    url('ajax2/', views.ajax2, name='ajax2'),
     path('read/<int:reading_id>/', views.read, name = "read"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
